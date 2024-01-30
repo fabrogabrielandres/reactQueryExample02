@@ -1,14 +1,25 @@
+import { UseGitHubApi } from "../../Hooks/UseGitHubApi";
+import { SpinLoader } from "../../shared/components/SpinLoader";
 
 export const LabelPicker = () => {
+  const labelsQuery = UseGitHubApi();
+  console.log(labelsQuery.data);
+
+  if (labelsQuery.isLoading) return <SpinLoader/>
+
   return (
-    <div>
-        <span 
-            className="badge rounded-pill m-1 label-picker"
-            style={{ border: `1px solid #ffccd3`, color: '#ffccd3' }}
+    <>
+      {labelsQuery.data?.map((label) => (
+        <span
+          className="badge rounded-pill m-1 label-picker"
+          style={{
+            border: `1px solid #${label.color}`,
+            color: `#${label.color}}`,
+          }}
         >
-            Primary
+          {label.name}
         </span>
-        
-    </div>
-  )
-}
+      ))}
+    </>
+  );
+};
