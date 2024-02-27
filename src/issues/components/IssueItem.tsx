@@ -13,13 +13,16 @@ interface Props{
 export const IssueItem:FC<Props> = ({issue}) => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    const mouseEnter = (issueNumber:number)=>{
+    const prefetchData = (issueNumber:number)=>{
         queryClient.prefetchQuery({queryKey:['issue',issueNumber],queryFn:()=>getIssueInfo(issueNumber)})
-        queryClient.prefetchQuery({queryKey:['issue',issueNumber , "comments"],queryFn:()=>getIssueComments(issueNumber)})
+        queryClient.prefetchQuery({queryKey:['issue',issueNumber,"comments"],queryFn:()=>getIssueComments(issueNumber)})
+    };
+    const preSetData = (issueNumber:number)=>{
+        queryClient.setQueryData(['issue',issueNumber],getIssueInfo(issueNumber))
     };
     
     return (
-        <div className="card mb-2 issue" onClick={()=>navigate(`/issues/issue/${issue.number}`)} onMouseEnter={()=>mouseEnter(issue.number)}>
+        <div className="card mb-2 issue" onClick={()=>navigate(`/issues/issue/${issue.number}`)} onMouseEnter={()=>preSetData(issue.number)}>
             <div className="card-body d-flex align-items-center">
             {issue.state  == State.Close ?
                 <FiInfo size={30} color="red" /> : <FiCheckCircle size={30} color="green" />
