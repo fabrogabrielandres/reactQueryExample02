@@ -1,20 +1,26 @@
 import { FiInfo, FiMessageSquare, FiCheckCircle } from 'react-icons/fi';
-import { IssuesListIterface, State } from '../../interfaces/GitHub';
+import { Issues, State } from '../../interfaces/GitHub';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import { getIssueComments, getIssueInfo } from '../../Hooks/UseIssue';
 
 
 interface Props{
-    issue:IssuesListIterface
+    issue:Issues
 }
 
 export const IssueItem:FC<Props> = ({issue}) => {
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    const mouseEnter = (issueNumber:number)=>{
+        queryClient.prefetchQuery({queryKey:['issue',issueNumber],queryFn:()=>getIssueInfo(issueNumber)})
+        queryClient.prefetchQuery({queryKey:['issue',issueNumber , "comments"],queryFn:()=>getIssueComments(issueNumber)})
+    };
     
     return (
-        <div className="card mb-2 issue" onClick={()=>navigate(`/issues/issue/${issue.number}`)}>
+        <div className="card mb-2 issue" onClick={()=>navigate(`/issues/issue/${issue.number}`)} onMouseEnter={()=>mouseEnter(issue.number)}>
             <div className="card-body d-flex align-items-center">
-                
             {issue.state  == State.Close ?
                 <FiInfo size={30} color="red" /> : <FiCheckCircle size={30} color="green" />
             }

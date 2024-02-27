@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { IssuesListIterface } from '../../interfaces/GitHub';
+import { Issues } from '../../interfaces/GitHub';
 import { IssueItem } from './IssueItem';
 
 interface Props {
-    issues:IssuesListIterface[]
+    issues:Issues[]
 }
 
 

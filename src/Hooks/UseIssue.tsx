@@ -6,14 +6,14 @@ import { sleep } from "../helpers/sleep"
 
 
 
-const getIssueInfo = async (issueNumber:number):Promise<Issues>=>{
+export const getIssueInfo = async (issueNumber:number):Promise<Issues>=>{
     await sleep(2)
     const { data } = await GithubApi.get<Issues>(`issues/${issueNumber}`)
     console.log("issues",data);
     return (data)
 }
 
-const getIssueComments = async (issueNumber:number):Promise<Issues[]>=>{
+export const getIssueComments = async (issueNumber:number):Promise<Issues[]>=>{
     await sleep(2)
     const { data } = await GithubApi.get<Issues[]>(`issues/${issueNumber}/comments`)
     console.log("comments",data);
@@ -22,9 +22,9 @@ const getIssueComments = async (issueNumber:number):Promise<Issues[]>=>{
 }
 
 export const UseIssue = (issueNumber:number) => {
-    const issueQuery    = useQuery({queryKey:['issue',issueNumber]   ,
+    const issueQuery    = useQuery({queryKey:['issue',issueNumber],
         queryFn:()=>getIssueInfo(issueNumber)});
-    const commentsQuery = useQuery({queryKey:['comments',issueNumber],
+    const commentsQuery = useQuery({queryKey:['issue',issueNumber , "comments"],
         queryFn:()=>getIssueComments(issueNumber),enabled:issueQuery.data !== undefined});
         // enabled, with this condition i chose if i want to do the petition or not 
      return ( {issueQuery,commentsQuery} )
