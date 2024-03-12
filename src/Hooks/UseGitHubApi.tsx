@@ -6,12 +6,19 @@ import { useQuery } from '@tanstack/react-query'
   
 const fetchLabels = async ():Promise<Array<LabelInterface>> => {
     await sleep(2);
-    const { data } = await GithubApi.get<Array<LabelInterface>>(`/labels`)
+    const { data } = await GithubApi.get<Array<LabelInterface>>(`/labels?per_page=100`,{
+        headers:{
+            Authorization:null
+        }
+    })
     return data
 }
   
 
 export const UseGitHubApi = () => {
-    const QueryLabels = useQuery({queryKey:['Labels'],queryFn:()=>fetchLabels(), staleTime:1000*60*60})
-   return (QueryLabels)
+    const QueryLabels = useQuery({queryKey:['Labels'],queryFn:()=>fetchLabels()
+    ,staleTime:1000*60*60
+
+})
+   return QueryLabels
 }

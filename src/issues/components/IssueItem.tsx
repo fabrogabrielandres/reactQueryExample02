@@ -18,8 +18,10 @@ export const IssueItem:FC<Props> = ({issue}) => {
         queryClient.prefetchQuery({queryKey:['issue',issueNumber,"comments"],queryFn:()=>getIssueComments(issueNumber)})
     };
     const preSetData = (issueNumber:number)=>{
-        queryClient.setQueryData(['issue',issueNumber],issue)
-
+        queryClient.setQueryData(['issue',issueNumber],issue, 
+        {updatedAt: (new Date().getTime()) + 100000}
+        // updatedAt dice cuanto tiempo despues de la fecha se puede volver a actualizar la data es similar al 
+        )
     };
     //el prefetch carga el issue mediante un fetch (getIssueInfo) y los comentarios de los issue con otro fetch(getIssueComments),
     //el pre set ya carga lo que seria el getIssueInfo porque es la misma informacion ya la poseo , por eso cuando entras a un issue rapido antes de los dos segundo se ve algo informacion del issue y luego carga los comentarios

@@ -1,16 +1,31 @@
 import { useQuery } from "@tanstack/react-query";
 import { GithubApi } from "../api/lavels.serivce";
 import { sleep } from "../helpers/sleep";
-import { Issues } from "../interfaces/GitHub";
+import { Issues, State } from "../interfaces/GitHub";
 
-const fetchIssues = async ():Promise<Issues[]> => {
+
+
+interface Props {
+    tabState?:State,
+    listLabelsSelected?:Array<string>
+}
+
+
+const fetchIssues = async (tabState?:State,listLabelsSelected?:Array<string>):Promise<Issues[]> => {
     await sleep(2);
-    const {data} = await GithubApi.get<Issues[]>('/issues')
+    console.error(tabState,listLabelsSelected);
+
+    const params = new URLSearchParams();
+    if(tabState)params.append("state",tabState );
+    console.log({params});
+    
+    
+    const {data} = await GithubApi.get<Issues[]>('/issues',{params})
     return (data)
 }
 
-export const UseIssueList = () => {
-    const QueryIssues = useQuery({queryKey:['Issues'],queryFn:()=>fetchIssues()})
+export const UseIssueList = ({tabState,listLabelsSelected}:Props) => {
+    const QueryIssues = useQuery({queryKey:['Issues'],queryFn:()=>fetchIssues(tabState,listLabelsSelected)})
     return ({QueryIssues})
 }
 

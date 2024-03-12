@@ -1,26 +1,28 @@
 import { FC } from 'react';
-import { Issues } from '../../interfaces/GitHub';
+import { Issues, State } from '../../interfaces/GitHub';
 import { IssueItem } from './IssueItem';
 
 interface Props {
     issues:Issues[]
+    tabState?:State 
+    changeStateTab:(changeStateTab?: State )=>void
 }
 
 
-export const IssueList:FC<Props> = ({issues}) => {
+export const IssueList:FC<Props> = ({issues,tabState,changeStateTab}) => {
     
     return (
         <div className="card border-white">
             <div className="card-header bg-dark">
                 <ul className="nav nav-pills card-header-pills">
-                    <li className="nav-item">
-                        <a className="nav-link active">All</a>
+                    <li className="nav-item" onClick={()=>changeStateTab(undefined)}>
+                        <a className={ !tabState ? `nav-link active` : "nav-link"}>All</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link">Open</a>
+                    <li className="nav-item" onClick={()=>changeStateTab(State.Open)}>
+                        <a className={  tabState == State.Open ? `nav-link active` : "nav-link"}>Open</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link">Closed</a>
+                    <li className="nav-item" onClick={()=>changeStateTab(State.Close)}>
+                        <a className={ tabState == State.Close ? `nav-link active` : "nav-link"}>Closed</a>
                     </li>
                 </ul>
             </div>
