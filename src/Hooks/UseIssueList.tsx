@@ -6,18 +6,26 @@ import { Issues, State } from "../interfaces/GitHub";
 
 
 interface Props {
-    tabState?:State,
-    listLabelsSelected:Array<string>
+    tabState:State,
+    listLabelsSelected?:Array<string>
 }
 
 
-const fetchIssues = async (tabState?:State,listLabelsSelected?:Array<string>):Promise<Issues[]> => {
+const fetchIssues = async (tabState:State,listLabelsSelected?:Array<string>):Promise<Issues[]> => {
     await sleep(2);
-    console.error(tabState,listLabelsSelected);
-
     const params = new URLSearchParams();
-    if(tabState)params.append("state",tabState );
+    if(tabState){
+        params.append("state",tabState )
+    }
+    if(listLabelsSelected){
+        const listLabels = listLabelsSelected.join(",")
+        console.log("listLabels",listLabels);
+        params.append("labels",listLabels )
+    }
+    params.append("page","1" )
+    params.append("per_page","5" )
     console.log({params});
+
     
     
     const {data} = await GithubApi.get<Issues[]>('/issues',{params})
