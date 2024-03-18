@@ -4,6 +4,7 @@ import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { getIssueComments, getIssueInfo } from '../../Hooks/UseIssue';
+import { timeSince } from '../../helpers/timeSince';
 
 
 interface Props{
@@ -11,6 +12,9 @@ interface Props{
 }
 
 export const IssueItem:FC<Props> = ({issue}) => {
+
+    
+
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const prefetchData = (issueNumber:number)=>{
@@ -40,7 +44,7 @@ export const IssueItem:FC<Props> = ({issue}) => {
 
                 <div className="d-flex flex-column flex-fill px-2">
                     <span>{issue.title}</span>
-                    <span className="issue-subinfo">{issue.number} opened 2 days ago by <span className='fw-bold'>{issue.user.login}</span></span>
+                    <span className="issue-subinfo">{issue.number} opened {timeSince(String(issue.created_at))} ago by <span className='fw-bold'>{issue.user.login}</span></span>
                     <div>
                         {
                             issue.labels.map(label=>
