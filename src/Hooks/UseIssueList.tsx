@@ -7,7 +7,7 @@ import { Issues, State } from "../interfaces/GitHub";
 
 interface Props {
     tabState?:State,
-    listLabelsSelected?:Array<string>
+    listLabelsSelected:Array<string>
 }
 
 
@@ -25,7 +25,7 @@ const fetchIssues = async (tabState?:State,listLabelsSelected?:Array<string>):Pr
 }
 
 export const UseIssueList = ({tabState,listLabelsSelected}:Props) => {
-    const QueryIssues = useQuery({queryKey:['Issues'],queryFn:()=>fetchIssues(tabState,listLabelsSelected)})
+    const QueryIssues = useQuery({queryKey:['Issues',tabState,{listLabelsSelected} ],queryFn:()=>fetchIssues(tabState,listLabelsSelected)})
     return ({QueryIssues})
 }
 

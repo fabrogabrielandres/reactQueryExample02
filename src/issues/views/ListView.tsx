@@ -9,9 +9,7 @@ import { State } from '../../interfaces/GitHub';
 export const ListView = () => {
  
   const [tabState, setTabState] = useState<State>();
-  const changeStateTab = (newState:(State | undefined ))=>{
-    setTabState(newState)
-  }
+
   const [listLabelsSelected, setListLabelsSelected] = useState<Array<string>>([])
   const {QueryIssues} = UseIssueList({tabState,listLabelsSelected});
   
@@ -26,7 +24,7 @@ export const ListView = () => {
     <div className="row mt-5">
       
       <div className="col-8">
-        {QueryIssues.isLoading ? <SpinLoader/> : <IssueList issues = {QueryIssues.data || []} changeStateTab = {changeStateTab} tabState={tabState}/>}        
+        {QueryIssues.isLoading ? <SpinLoader/> : <IssueList issues = {QueryIssues.data || []} changeStateTab = {(newState)=>setTabState(newState)} tabState={tabState}/>}        
       </div>      
       <div className="col-4">
         <LabelPicker onLabelChanged={onLabelChanged} listLabelsSelected={listLabelsSelected} />

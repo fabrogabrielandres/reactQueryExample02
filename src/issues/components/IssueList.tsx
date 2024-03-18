@@ -9,13 +9,13 @@ interface Props {
 }
 
 
-export const IssueList:FC<Props> = ({issues,tabState,changeStateTab}) => {
+export const IssueList = ({issues,tabState,changeStateTab}:Props) => {
     
     return (
         <div className="card border-white">
             <div className="card-header bg-dark">
                 <ul className="nav nav-pills card-header-pills">
-                    <li className="nav-item" onClick={()=>changeStateTab(undefined)}>
+                    <li className="nav-item" onClick={()=>changeStateTab()}>
                         <a className={ !tabState ? `nav-link active` : "nav-link"}>All</a>
                     </li>
                     <li className="nav-item" onClick={()=>changeStateTab(State.Open)}>
