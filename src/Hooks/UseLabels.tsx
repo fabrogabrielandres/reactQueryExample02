@@ -1,4 +1,4 @@
-import { GithubApi } from '../api/lavels.serivce'
+import { GithubApi } from '../api/GithubApi.serivce'
 import { sleep } from '../helpers/sleep';
 import { LabelInterface } from '../interfaces/GitHub'
 import { useQuery } from '@tanstack/react-query'
@@ -17,7 +17,7 @@ const fetchLabels = async ():Promise<Array<LabelInterface>> => {
 }
   
 
-export const UseGitHubApi = () => {
+export const UseLabels = () => {
     const QueryLabels = useQuery({queryKey:['Labels'],queryFn:()=>fetchLabels()
     
 

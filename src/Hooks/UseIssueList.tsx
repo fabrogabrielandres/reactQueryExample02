@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { GithubApi } from "../api/lavels.serivce";
+import { GithubApi } from "../api/GithubApi.serivce";
 import { sleep } from "../helpers/sleep";
 import { Issues, State } from "../interfaces/GitHub";
 

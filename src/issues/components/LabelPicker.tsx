@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { UseGitHubApi } from "../../Hooks/UseGitHubApi";
+import { UseLabels } from "../../Hooks/UseLabels";
 import { SpinLoader } from "../../shared/components/SpinLoader";
 
 
@@ -9,7 +9,7 @@ interface Prop{
 }
 export const LabelPicker:FC<Prop> = ({listLabelsSelected,onLabelChanged}) => {
   
-  const labelsQuery = UseGitHubApi();
+  const labelsQuery = UseLabels();
   
   if (labelsQuery.isLoading) return <SpinLoader/>
 
