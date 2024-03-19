@@ -6,12 +6,12 @@ import { Issues, State } from "../interfaces/GitHub";
 
 
 interface Props {
-    tabState:State,
     listLabelsSelected?:Array<string>
+    tabState?:State,
 }
 
 
-const fetchIssues = async (tabState:State,listLabelsSelected?:Array<string>):Promise<Issues[]> => {
+const fetchIssues = async (tabState:State | undefined,listLabelsSelected?:Array<string>):Promise<Issues[]> => {
     await sleep(2);
     const params = new URLSearchParams();
     if(tabState){

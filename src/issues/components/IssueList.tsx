@@ -34,6 +34,7 @@ export const IssueList = ({issues,tabState,changeStateTab}:Props) => {
                 
                 }                
             </div>
+
         </div>
     )
 }
