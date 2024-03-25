@@ -8,10 +8,8 @@ import { State } from "../../interfaces/GitHub";
 export const ListView = () => {
   const [tabState, setTabState] = useState<State | undefined>();
 
-  const [listLabelsSelected, setListLabelsSelected] = useState<Array<string>>(
-    []
-  );
-  const { QueryIssues } = UseIssueList({ tabState, listLabelsSelected });
+  const [listLabelsSelected, setListLabelsSelected] = useState<Array<string>>([]);
+  const { QueryIssues ,page, nextPage,prevPage } = UseIssueList({ tabState, listLabelsSelected});
 
   const onLabelChanged = (label: string): void => {
     listLabelsSelected.includes(label)
@@ -35,11 +33,11 @@ export const ListView = () => {
         )}
 
         <div className="d-flex flex-row justify-content-between mt-4  align-items-center">
-          <button type="button" className="btn btn-primary ">
+          <button type="button" className="btn btn-primary" onClick={prevPage} disabled = {QueryIssues.isFetching}>
             Primary
           </button>
-          <span>123</span>
-          <button type="button" className="btn btn-primary">
+          <span>{QueryIssues.isFetching ?  "loading" : page}</span>
+          <button type="button" className="btn btn-primary" onClick={nextPage} disabled = {QueryIssues.isFetching}>
             Primary
           </button>
         </div>
