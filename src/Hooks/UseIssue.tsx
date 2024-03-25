@@ -9,14 +9,12 @@ import { sleep } from "../helpers/sleep"
 export const getIssueInfo = async (issueNumber:number):Promise<Issues>=>{
     await sleep(2)
     const { data } = await GithubApi.get<Issues>(`issues/${issueNumber}`)
-    console.log("issues",data);
     return (data)
 }
 
 export const getIssueComments = async (issueNumber:number):Promise<Issues[]>=>{
     await sleep(2)
     const { data } = await GithubApi.get<Issues[]>(`issues/${issueNumber}/comments`)
-    console.log("comments",data);
     
     return (data)
 }

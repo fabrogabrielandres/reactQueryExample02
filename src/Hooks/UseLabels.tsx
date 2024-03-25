@@ -5,8 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 
   
 const fetchLabels = async ():Promise<Array<LabelInterface>> => {
-    console.log("estoy haciendo peticion");
-    
+       
     await sleep(2);
     const { data } = await GithubApi.get<Array<LabelInterface>>(`/labels?per_page=100`,{
         headers:{

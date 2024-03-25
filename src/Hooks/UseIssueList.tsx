@@ -22,7 +22,6 @@ const fetchIssues = async ({tabState,listLabelsSelected ,page}:Props):Promise<Is
     }
     if(listLabelsSelected){
         const listLabels = listLabelsSelected.join(",")
-        console.log("listLabels",listLabels);
         params.append("labels",listLabels )
     }
     params.append("page",String(page) )
