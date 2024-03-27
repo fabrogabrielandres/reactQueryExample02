@@ -13,13 +13,13 @@ interface Props {
 }
 
 interface QueryProps {
-  pageParams? : number,
+  pageParam? : number,
   queryKey : Array<string  | Props>
 }
 
 
 
-const fetchIssues = async ({pageParams=1 ,queryKey}:QueryProps):Promise<Issues[]> => {
+const fetchIssues = async ({queryKey, pageParam=1}:QueryProps):Promise<Issues[]> => {
   await sleep(2);
   
   const params = new URLSearchParams();
@@ -36,8 +36,13 @@ const fetchIssues = async ({pageParams=1 ,queryKey}:QueryProps):Promise<Issues[]
       const listLabels = listLabelsSelected.join(",")
       params.append("labels",listLabels )
   }
-  params.append("page",String(pageParams) )
+  console.log("pageParamspageParamspageParamspageParams",pageParam);
+  
+  params.append("page",String(pageParam))
   params.append("per_page","5" )
+
+  console.log("params",params);
+  
  
   
   const {data} = await GithubApi.get<Issues[]>('/issues',{params})
@@ -55,8 +60,8 @@ export const UseIssueListInfinite = ({tabState,listLabelsSelected}:Props) => {
 
 const QueryIssues = useInfiniteQuery({queryKey:['Issues',"infinite",{tabState,listLabelsSelected} ],queryFn:(data)=>fetchIssues(data),
 getNextPageParam:(page,pages)=>{
-  console.log("page",page);
-  console.log("pages",pages);
+  // console.log("page",page);
+  // console.log("pages",pages);
   
   if(pages.length === 0) return;
   return pages.length +1
